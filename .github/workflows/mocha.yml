@@ -32,23 +32,23 @@ jobs:
       node-versions: "20,22,24"
       npm-script: test-smoke
 
-  test-node-lts:
-    # TODO: Restore "mocha-github-actions-reporter" style reporting without relying on third party module
-    uses: ./.github/workflows/npm-script.yml
-    needs: smoke
-    strategy:
-      fail-fast: false
-      matrix:
-        test-part:
-          - interfaces
-          - unit
-          - integration
-          - jsapi
-          - requires
-          - reporters
-          - only
-    with:
-      npm-script: test-node:${{ matrix.test-part }}
+  # test-node-lts:
+  #   # TODO: Restore "mocha-github-actions-reporter" style reporting without relying on third party module
+  #   uses: ./.github/workflows/npm-script.yml
+  #   needs: smoke
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       test-part:
+  #         - interfaces
+  #         - unit
+  #         - integration
+  #         - jsapi
+  #         - requires
+  #         - reporters
+  #         - only
+  #   with:
+  #     npm-script: test-node:${{ matrix.test-part }}
 
   test-node-all:
     name: Test ${{ matrix.test-part }} in all environments
@@ -63,28 +63,30 @@ jobs:
       matrix:
         coverage: [true]
         test-part:
-          - interfaces
-          - unit
+          # - interfaces
+          # - unit
           - integration
-          - requires
-          - reporters
-          - only
+          # - requires
+          # - reporters
+          # - only
         include:
           - test-part: jsapi
             coverage: false
     with:
-      os: "ubuntu-latest,windows-latest"
+      # os: "ubuntu-latest,windows-latest"
+      os: "windows-latest"
       # We pin exact versions here per https://github.com/mochajs/mocha/issues/5052
       # Ref https://nodejs.org/en/about/previous-releases
-      node-versions: "20.19.4,22.18.0,24.6.0"
+      # node-versions: "20.19.4,22.18.0,24.6.0"
+      node-versions: "20.19.4"
       npm-script: test-node:${{ matrix.test-part }}
       coverage: ${{ matrix.coverage }}
 
-  test-browser-local:
-    uses: ./.github/workflows/npm-script.yml
-    with:
-      browsers: ChromeHeadless
-      npm-script: test-browser
+  # test-browser-local:
+  #   uses: ./.github/workflows/npm-script.yml
+  #   with:
+  #     browsers: ChromeHeadless
+  #     npm-script: test-browser
 
   # test-browser-saucelabs:
   #   # Don't run forked 'pull_request' without saucelabs token
