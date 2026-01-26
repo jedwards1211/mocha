@@ -1,7 +1,7 @@
 # Mocha-specific
 docs/images/supporters
-mocha.js
-mocha.js.map
+# mocha.js
+# mocha.js.map
 .karma/
 !bin/mocha.js
 !lib/mocha.js
